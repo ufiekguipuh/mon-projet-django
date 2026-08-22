@@ -21,12 +21,14 @@ def index(request):
 
 @csrf_exempt
 def stations_en_garde(request):
-    stations = Station.objects.filter(en_garde=True)
+    # Récupération de toutes les stations
+    stations = Station.objects.all()
     data = [
         {
             "nom": s.nom,
-            "lat": s.latitude,
-            "lng": s.longitude
+            "lat": float(s.latitude),
+            "lng": float(s.longitude),
+            "en_garde": s.en_garde
         }
         for s in stations
     ]
