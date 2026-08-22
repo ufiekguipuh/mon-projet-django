@@ -9,21 +9,23 @@
   <div id="station-garde"></div>
   <button onclick="findNearestStation()">Trouver la station la plus proche</button>
   <script>
-    async function loadStationEnGarde() {
-      try {
-        const response = await fetch("/api/stations/");
-        const data = await response.json();
-        const stations = data.stations;
-        const stationEnGarde = stations.find(station => station.en_garde === true);
-        if (stationEnGarde) {
-          document.getElementById("station-garde").innerText =
-            `Station en garde : ${stationEnGarde.nearest.nom}`;
-        } 
-      } catch (err) {
-        document.getElementById("station-garde").innerText =
-         "Erreur lors de la récupération des stations : " + err;
-      }
+   async function loadStationEnGarde() {
+  try {
+    const response = await fetch("/api/stations/");
+    const data = await response.json();
+    const stations = data.stations;
+    const stationEnGarde = stations.find(station => station.en_garde === true);
+    if (stationEnGarde) {
+      document.getElementById("station-garde").innerText =
+        `Station en garde : ${stationEnGarde.nom}`;
+    } else {
+      document.getElementById("station-garde").innerText = "Aucune station en garde actuellement.";
     }
+  } catch (err) {
+    document.getElementById("station-garde").innerText =
+      "Erreur lors de la récupération des stations : " + err;
+  }
+}
     async function findNearestStation() {
       try {
         const response = await fetch("/api/stations/");
